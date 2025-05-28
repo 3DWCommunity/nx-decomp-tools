@@ -5,6 +5,7 @@ from colorama import Back, Fore, Style
 from util import utils
 from util.utils import FunctionStatus
 import typing as tp
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--csv", "-c", action="store_true",
@@ -98,3 +99,17 @@ else:
     print(format_progress_for_status(f"{Fore.YELLOW}non-matching (minor issues)", FunctionStatus.Equivalent))
     print(format_progress_for_status(f"{Fore.RED}non-matching (major issues)", FunctionStatus.NonMatching))
     print()
+
+    percentage = round(100 * count_decompiled / num_total, 3)
+    label = "decompiled"
+    color = "blue"
+    json = []
+    json.append("{\n")
+    json.append("\t\"schemaVersion\": 1,\n")
+    json.append(f"\t\"label\": \"{label}\",\n")
+    json.append(f"\t\"message\": \"{percentage}%\",\n")
+    json.append(f"\t\"color\": \"{color}\"\n")
+    json.append("}")
+
+    with open(f"data/progress.json", "w") as w:
+        w.writelines(json)
