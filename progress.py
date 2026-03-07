@@ -95,12 +95,13 @@ else:
         FunctionStatus.NonMatching]
 
     print(format_progress(f"{Fore.CYAN}decompiled", count_decompiled, code_size_decompiled))
+
     print(format_progress_for_status(f"{Fore.GREEN}matching", FunctionStatus.Matching))
     print(format_progress_for_status(f"{Fore.YELLOW}non-matching (minor issues)", FunctionStatus.Equivalent))
     print(format_progress_for_status(f"{Fore.RED}non-matching (major issues)", FunctionStatus.NonMatching))
     print()
 
-    percentage = round(100 * count_decompiled / num_total, 3)
+    percentage = round(100 * code_size[FunctionStatus.Matching] / code_size_total, 3)
     label = "decompiled"
     color = "blue"
     json = []
