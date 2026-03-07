@@ -101,6 +101,8 @@ else:
     print(format_progress_for_status(f"{Fore.RED}non-matching (major issues)", FunctionStatus.NonMatching))
     print()
 
+    funcs_percantage = round(100 * count_decompiled / num_total, 3)
+
     percentage = round(100 * code_size[FunctionStatus.Matching] / code_size_total, 3)
     label = "decompiled"
     color = "blue"
@@ -113,4 +115,17 @@ else:
     json.append("}")
 
     with open(f"data/progress.json", "w") as w:
+        w.writelines(json)
+
+    label = "functions"
+    color = "blue"
+    json = []
+    json.append("{\n")
+    json.append("\t\"schemaVersion\": 1,\n")
+    json.append(f"\t\"label\": \"{label}\",\n")
+    json.append(f"\t\"message\": \"{funcs_percantage}%\",\n")
+    json.append(f"\t\"color\": \"{color}\"\n")
+    json.append("}")
+
+    with open(f"data/functions.json", "w") as w:
         w.writelines(json)
